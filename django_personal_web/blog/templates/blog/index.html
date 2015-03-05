@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load django_markdown %}
+
+{% block nav-blog %}<li class="active"><a class="active" href="{% url 'blog_index' %}">Blog</a></li>{% endblock nav-blog %}
+
+{% block content %}
+    <div class="container">
+        {% for object in object_list %}
+            <div class="post">
+                <h1><a href="{% url "entry_detail" slug=object.slug %}">{{ object.title }}</a></h1>
+                <p class="meta">
+                    {{ object.created }} |
+                    Tagged under {{ object.tags.all|join:", " }}
+                </p>
+                {{ object.body|markdown }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
